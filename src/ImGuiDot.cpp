@@ -926,7 +926,9 @@ namespace ImGuiDot
         if (!position && !label->set) return;
 
         ImFont *const font   = ImGui::GetIO().Fonts->Fonts[0];
-        const float fontSize = static_cast<float>(label->fontsize) * params.zoom;
+        // The font size is in typographic points, like the layout: convert it to pixels as the geometry is, or
+        // the text comes out smaller than the space Graphviz measured for it.
+        const float fontSize = static_cast<float>(label->fontsize) * PIXEL_PER_PPI * params.zoom;
 
         // The colour is read from the owner's attribute and not from label->fontcolor: the layout fills the latter with
         // "black" when the source code does not set it, which would hide the default colour.
